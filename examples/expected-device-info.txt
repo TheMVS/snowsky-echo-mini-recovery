@@ -1,0 +1,29 @@
+Known successful recovery unit
+
+RockUSB:
+  VID: 0x2207
+  PID: 0x262d
+  mode: Loader
+
+Chip info bytes:
+  43 32 36 32 0 0 0 0 55 53 42 43 0 0 0 0
+
+Flash:
+  Manufacturer: SAMSUNG
+  Flash Size: 7456 MB
+  Flash Size: 15269888 Sectors
+  Block Size: 512 KB
+  Page Size: 8 KB
+  Flash CS: Flash<0>
+
+Firmware:
+  HIFIEC39.IMG
+  size: 33554436 bytes
+  SHA-256:
+  59b6230df42607384345992532ba8ae8f7967c6dfb51dc2f9f100447ee8cd17e
+
+Successful raw payload:
+  first 33554432 bytes
+  65536 sectors
+  target LBA 0-65535
+  write block size 16 sectors / 8192 bytes

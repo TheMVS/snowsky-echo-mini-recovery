@@ -1,0 +1,6 @@
+*.IMG
+*.img
+*.bin
+*.dump
+.DS_Store
+echo_diagnostic.txt
