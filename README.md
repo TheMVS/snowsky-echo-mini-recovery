@@ -708,8 +708,46 @@ See `docs/investigation.md` for the longer forensic chronology and why several i
 
 ---
 
-## 22. Disclaimer
 
-This is an independent recovery record based on one successfully recovered device. It is not an official FiiO/SNOWSKY or Rockchip flashing procedure.
+## Repository files: what each file is for
 
-Raw flash writes always carry risk. Make a backup first and verify the exact hardware and firmware before writing.
+- `README.md` — Main manual: brick symptoms, hardware, investigation, successful recovery and safety notes.
+- `scripts/recover-hifiec39.sh` — **MAIN RECOVERY SCRIPT. This is the script that automates the procedure that successfully recovered the tested Echo Mini.** It verifies the known HIFIEC39 image, checks Loader/flash, backs up LBA 0–65535, writes the first 32 MiB to LBA 0–65535 in 16-sector blocks, verifies every block and performs a full final verification. It does not reset automatically.
+- `scripts/verify-hifiec39.sh` — Non-destructive HIFIEC39 size/SHA-256 checker.
+- `scripts/diagnose.sh` — Read-only Loader/chip/flash diagnostic (`ld`, `rci`, `rfi`).
+- `scripts/backup-lba0.sh` — Standalone read-only backup of the first 32 MiB (LBA 0–65535). The recovery script already makes this backup.
+- `scripts/dump-region.sh` — Generic read-only raw flash dumper for forensic investigation.
+- `docs/flash-layout.md` — Approximate observed flash map; not an official partition table.
+- `docs/investigation.md` — Full chronology explaining how the solution was discovered, including failed approaches.
+- `docs/troubleshooting.md` — Loader, command, write/read, verification, firmware and hardware-revision troubleshooting.
+- `examples/expected-device-info.txt` — Reference VID/PID, C262 bytes, Samsung flash data, firmware hash, target LBAs and block size from the recovered unit.
+- `.gitignore` — Prevents firmware and raw dumps (`*.IMG`, `*.img`, `*.bin`, `*.dump`) from being committed accidentally.
+- `LICENSE` — MIT license for the scripts/documentation; it does not cover FiiO/SNOWSKY firmware.
+
+### Which file do I need?
+
+```text
+Understand everything:             README.md
+Check Loader/chip/flash:           scripts/diagnose.sh
+Verify HIFIEC39.IMG:               scripts/verify-hifiec39.sh
+Make a standalone backup:          scripts/backup-lba0.sh
+Dump arbitrary flash:              scripts/dump-region.sh
+PERFORM THE PROVEN RECOVERY:       scripts/recover-hifiec39.sh
+Understand how it was discovered:  docs/investigation.md
+See the observed flash map:        docs/flash-layout.md
+Troubleshoot:                       docs/troubleshooting.md
+```
+
+For the proven recovery, the important script is therefore **`scripts/recover-hifiec39.sh`**.
+
+## 22. Disclaimer and scope
+
+This README documents **a solution to one specific type of SNOWSKY/FiiO Echo Mini failure**: the tested 8 GB unit no longer booted after a forced firmware update, but it could still enter RockUSB **Loader** mode and `rkdeveloptool` could access its Samsung internal flash. The procedure described here successfully recovered that device by restoring the verified HIFIEC39 firmware payload to LBA 0–65535.
+
+It is **not a universal solution for every Echo Mini brick**. A device with different symptoms, storage capacity, hardware revision, firmware, USB identification, flash layout, damaged hardware, inaccessible Loader mode, or another cause of failure may require a different procedure. Do not assume that the offsets, image, or commands documented here are correct for another unit unless its relevant characteristics have been verified.
+
+This is an independent community recovery record and is **not an official FiiO/SNOWSKY or Rockchip flashing procedure**. It is provided for informational and experimental purposes. Raw flash access and firmware modification can cause data loss, make a device unbootable, complicate later recovery, or potentially cause other damage if the procedure is applied incorrectly or to incompatible hardware.
+
+**Use this information entirely at your own risk. The author/contributor of this guide accepts no responsibility or liability for damage, data loss, device failure, loss of warranty, or any other consequence resulting from following, adapting, or executing the procedures, commands, or scripts described here.**
+
+Always make a backup first, verify the exact hardware and firmware, read the complete procedure before writing anything, and stop immediately if observed device information or verification results differ from the documented tested case.
