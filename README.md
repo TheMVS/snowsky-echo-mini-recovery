@@ -134,7 +134,9 @@ The recovered unit was the ~8 GB variant and the image that actually recovered i
 
 ## 4. Host environment
 
-Recovery was performed from a MacBook Pro with Apple Silicon/macOS using `rkdeveloptool`.
+Recovery was performed and successfully tested on a **Mac with an Apple M2 processor**, using **Apple Silicon / ARM64**, **macOS**, and `rkdeveloptool`.
+
+The complete procedure documented here — including RockUSB communication, raw LBA reads/writes, per-block verification, full read-back verification, and the final successful firmware restoration — was therefore confirmed on real **Apple M2** hardware.
 
 Check installation:
 
@@ -652,7 +654,7 @@ Flash:        Samsung
 Flash size:   7456 MB / 15269888 sectors
 Firmware:     HIFIEC39.IMG
 Version:      V3.9
-Host:         macOS / Apple Silicon
+Host:         Apple M2 Mac / Apple Silicon / ARM64 / macOS
 Tool:         rkdeveloptool
 ```
 
